@@ -1,0 +1,54 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: google-client-id
+            client-secret: google-client-secret
+
+  data:
+    rest:
+      base-path: /data-api
+
+  datasource:
+    schema:
+      - order-schema.sql
+      - ingredient-schema.sql
+      - taco-schema.sql
+      - user-schema.sql
+    data:
+      - ingredients.sql
+
+server:
+  port: 8443
+  ssl:
+    key-store: file:///path/to/mykeys.jks
+    key-store-password: letmein
+    key-password: letmein
+
+logging:
+  file:
+    path: /var/logs/
+    file: TacoCloud.log
+  level:
+    root: WARN
+    org.springframework.security: DEBUG
+    tacos: DEBUG
+
+taco:
+  orders:
+    pageSize: 10
+
+---
+spring:
+  profiles: prod
+
+  datasource:
+    url: jdbc:mysql://localhost/tacocloud
+    username: tacouser
+    password: tacopassword
+
+logging:
+  level:
+    tacos: WARN
